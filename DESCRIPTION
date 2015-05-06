@@ -1,0 +1,19 @@
+Package: fheatmap
+Type: Package
+Title: R Function to Draw Heatmaps with Colored Dendogram
+Version: 1.0.0
+Date: 2015-05-01
+Author: Vaishali Tumulu and Sivasish Sindiri
+Maintainer: Vaishali Tumulu and Sivasish Sindiri<sentisci@gmail.com>
+Depends: R (>= 3.0)
+Description: R function to plot high quality, elegant heatmap using 'ggplot2' graphics .
+  Some of the important features of this package are, coloring of row/column side tree with
+  respect to the number of user defined cuts in the cluster, add annotations to both columns
+  and rows, option to input annotation palette for tree and column annotations and multiple 
+  parameters to modify aesthetics (style, color, font) of texts in the plot. 
+License: GPL-3
+LazyData: true
+Imports: grid, RColorBrewer , gdata, ggplot2, reshape2, gplots
+NeedsCompilation: no
+Repository: CRAN
+Packaged: 2015-05-01 18:35:41 UTC; sindiris
