@@ -195,7 +195,8 @@ draw_tree = function(hc=NULL,dim=NULL,rows=T,cut=0){
     #geom_point() +
     scale_y_continuous(limits=ylimits,expand=c(0,0) ) + 
     scale_x_continuous(limits=xlimits,expand=c(0,0) ) +
-    theme_blank() + xlab(NULL) + ylab(NULL)
+    theme_blank() + xlab(NULL) + ylab(NULL) +
+    theme(plot.margin=unit(c(0.05,0.05,0.05,0.05),"cm"))
   
   get_color_recursive <- function(x,color_vec=NULL){ 
     lines_color_dm <-na.omit( matrix(ncol=2,nrow=1) )
@@ -432,7 +433,9 @@ generate_annot_plot <- function(annot_object=NULL,annot_color=NULL,npalette_col=
     
     df_row_annot <- data.frame(x_row_annot,y_row_annot)
     print(ggplot(df_row_annot, mapping=aes(xmin=x_row_annot, xmax=x_row_annot+1, ymin=y_row_annot,ymax=y_row_annot+1 ) )+ geom_rect(fill=fill) + theme_blank() +
-            xlab(NULL) + ylab(NULL) +scale_x_discrete(expand=c(0,0)) + scale_y_discrete(expand=c(0,0)),newpage = FALSE )
+            xlab(NULL) + ylab(NULL) +scale_x_discrete(expand=c(0,0)) + 
+            scale_y_discrete(expand=c(0,0)) +
+            theme(plot.margin=unit(c(0.05,0.05,0.05,0.05),"cm")),newpage = FALSE)
     upViewport()
   }
   
@@ -504,7 +507,7 @@ draw_names <- function(col_names=NULL,row_names=NULL,total_names=0,font_size=0.5
     names_plot <- ggplot(df_test)  +
       scale_x_continuous(limits=c(1, total_names + 1),expand=c(0,0) ) + scale_y_continuous( limits=c(1, max(nchar(col_names))) ,expand=c(0,0)) +
       geom_text(x= x_coltext ,y=y_coltext,label=col_names,angle = 90,size=font_size,family=family,fontface= names_fontface, colour= names_color,hjust=1) +
-      theme_blank()  +
+      theme_blank()  + theme(plot.margin=unit(c(0.05,0.05,0.05,0.05),"cm")) +
       xlab(NULL) + ylab(NULL)
     print(names_plot,newpage=FALSE)
     upViewport()
@@ -518,15 +521,17 @@ draw_names <- function(col_names=NULL,row_names=NULL,total_names=0,font_size=0.5
     names_plot <- ggplot(df_test)  +
       scale_y_continuous(limits=c(1, total_names+1),expand=c(0,0) ) + scale_x_continuous( limits=c(1, max(nchar(row_names))) ,expand=c(0,0)) +
       geom_text(x= x_coltext ,y=y_coltext,label=row_names,size=font_size,family=family, fontface= names_fontface, colour= names_color,hjust=0) +
-      theme_blank()  +
+      theme_blank()  + theme(plot.margin=unit(c(0.05,0.05,0.05,0.05),"cm")) +
       xlab(NULL) + ylab(NULL)
     print(names_plot,newpage=FALSE)
     upViewport()
   }
 }
 
-#Draw heatmap matrix
+#Draw heatmap matrix 
 draw_mat <- function(data,dim=NULL,breaks=NULL,mat_color=NULL,cell_border=NULL,cell_border_col=NULL,display_number=F){
+  
+  #Make space around the matrix
   
   xmin <- rep(1:ncol(data),nrow(data))
   xmax <- xmin+1
@@ -551,7 +556,8 @@ draw_mat <- function(data,dim=NULL,breaks=NULL,mat_color=NULL,cell_border=NULL,c
   
   if(display_number == T){  p <- p+geom_text(x=x_axis_breaks, y=y_axis_breaks, label=as.character(text),size=3) }
   
-  p <- p+theme_blank()  + xlab(NULL) + ylab(NULL) + scale_x_discrete(expand=c(0,0)) + scale_y_discrete(expand=c(0,0))    
+  p <- p+theme_blank()  + xlab(NULL) + ylab(NULL) + scale_x_discrete(expand=c(0,0)) + scale_y_discrete(expand=c(0,0)) +
+        theme(plot.margin=unit(c(0.05,0.05,0.05,0.05),"cm"))
   
   pushViewport(vplayout(dim$matrix[1]:dim$matrix[2],dim$matrix[3]:dim$matrix[4]))
   print(p,newpage=FALSE)
@@ -561,7 +567,7 @@ draw_mat <- function(data,dim=NULL,breaks=NULL,mat_color=NULL,cell_border=NULL,c
 }
 
 #Draw heatmap legend
-draw_mat_legend <- function(data,breaks=NULL,mat_color,mat_legend_size=2,dim=NULL){
+draw_mat_legend <- function(data,breaks=NULL,mat_color,mat_legend_size=5,dim=NULL){
   
   pretty_range<-grid.pretty(range(as.matrix(data), na.rm = TRUE))
   pretty_range[1] <- min(as.matrix(data))
@@ -574,7 +580,8 @@ draw_mat_legend <- function(data,breaks=NULL,mat_color,mat_legend_size=2,dim=NUL
   y_axis_breaks <- seq(5,max(ymax),length.out =length(pretty_range))
   
   p<-ggplot(df_mat_legend, mapping=aes(xmin=xmin, xmax=xmax, ymin=ymin,ymax=ymax ))+
-    geom_rect(fill=mat_color)+annotate(geom="text",x=x_axis_breaks,y=y_axis_breaks,label=pretty_range,size=mat_legend_size,hjust=-1.5,vjust=0)+ xlab(NULL) + ylab(NULL)+
+    geom_rect(fill=mat_color)+annotate(geom="text",x=x_axis_breaks,y=y_axis_breaks,label=pretty_range,size=mat_legend_size,hjust=-1,vjust=0)+ 
+    xlab(NULL) + ylab(NULL)+
     scale_x_continuous(limits=c(0, 2),expand=c(0,0)) +scale_y_continuous(limits=c(0, max(ymax)+0.6),expand=c(0,0))+
     theme_blank()
   
@@ -845,13 +852,13 @@ fheatmap <- function(data,header=T,scale=F,title=NA,title_fontsize=6,title_color
                                                                 heights= unit.c(unit(c(title_height,tree_col_height,ann_col_height,matrix_height,col_name_height),"npc"))  )))
   
   
-  ##Draw grid for reference
-  for( i in 1:5)
-  {for (j in 1:6){
-    pushViewport(vplayout(i,j))
-    grid.rect()
-    upViewport()
-  }}
+#   ##Draw grid for reference
+#   for( i in 1:5)
+#   {for (j in 1:6){
+#     pushViewport(vplayout(i,j))
+#     grid.rect()
+#     upViewport()
+#   }}
   
   #make Grid Dimensions
   grid_dim_list<-grid_dim_function(display_rownames=display_rownames,display_colnames=display_colnames,annotation_row=annotation_row,
