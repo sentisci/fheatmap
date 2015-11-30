@@ -5,7 +5,7 @@ theme_blank <- function(){theme_blank<-theme(panel.grid.major = element_blank(),
                                              panel.background = element_blank(), axis.line = element_blank(), axis.ticks = element_blank(), 
                                              axis.text= element_blank(),panel.grid=element_blank(),panel.border=element_blank(),
                                              plot.margin=rep(unit(0,"null"),4),panel.margin = unit(0,"null"),plot.margin=rep(unit(0,"null"),4),
-                                             axis.ticks.length = unit(0,"null"),axis.ticks.margin = unit(0,"null"),legend.position = "none")
+                                             legend.position = "none")
                           return(theme_blank)}
 
 ##Get default colors or get "n" distinct ggplot colors
@@ -111,7 +111,7 @@ cluster_data = function(data, distance, method){
 #Draw title
 draw_title <- function(title=title,font_size=10,colour="black",family="",fontface="plain",dim =NULL){
   pushViewport(vplayout(dim$title[1]:dim$title[2],dim$title[3]:dim$title[4]))
-  draw_title<-ggplot()+annotate(geom="text", x=2, y=1, label=title,size=font_size,colour=colour,hjust=0.5,family=family,fontface=fontface)+theme_blank()+ xlab(NULL) + ylab(NULL)
+  draw_title<-ggplot()+annotate(geom="text", x=2, y=1, label=title,size=font_size,colour=colour,family=family,fontface=fontface)+theme_blank()+ xlab(NULL) + ylab(NULL)
   print(draw_title,newpage=FALSE)
   upViewport()
 }
@@ -485,7 +485,7 @@ generate_legend_plot <- function(dim=NULL,fill_legend=NULL,legend_fontsize=4,fam
     
     df <- data.frame(xmin,xmax,ymin,ymax,text_x,text_y)
     p<-ggplot(df,mapping=aes(xmin = xmin, xmax  = xmax, ymin = ymin , ymax = ymax ))+
-      geom_rect(fill=unname(fill_legend[[i]]),hjust=0) +
+      geom_rect(fill=unname(fill_legend[[i]])) +
       geom_text(x=text_x, y=text_y, label= labels,size=legend_fontsize,family = family,fontface=legend_fontface,colour=legend_color,hjust=0,vjust=0.5)+
       theme_blank() + scalex + scaley 
     print(p,newpage=F)
@@ -576,11 +576,11 @@ draw_mat_legend <- function(data,breaks=NULL,mat_color,mat_legend_size=5,dim=NUL
   ymin = seq(5,10,length.out =length(mat_color) )
   ymax = ymin + (ymin[2]-ymin[1])
   df_mat_legend <- data.frame(xmin,xmax,ymin,ymax)
-  x_axis_breaks <- rep(0.8,length(pretty_range))
+  x_axis_breaks <- rep(1.3,length(pretty_range))
   y_axis_breaks <- seq(5,max(ymax),length.out =length(pretty_range))
   
   p<-ggplot(df_mat_legend, mapping=aes(xmin=xmin, xmax=xmax, ymin=ymin,ymax=ymax ))+
-    geom_rect(fill=mat_color)+annotate(geom="text",x=x_axis_breaks,y=y_axis_breaks,label=pretty_range,size=mat_legend_size,hjust=-1,vjust=0)+ 
+    geom_rect(fill=mat_color)+annotate(geom="text",x=x_axis_breaks,y=y_axis_breaks,label=pretty_range,size=mat_legend_size)+ 
     xlab(NULL) + ylab(NULL)+
     scale_x_continuous(limits=c(0, 2),expand=c(0,0)) +scale_y_continuous(limits=c(0, max(ymax)+0.6),expand=c(0,0))+
     theme_blank()
