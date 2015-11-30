@@ -1,0 +1,2 @@
+# fheatmap
+R function to plot high quality, elegant heatmap using 'ggplot2' graphics .   Some of the important features of this package are, coloring of row/column side tree with   respect to the number of user defined cuts in the cluster, add annotations to both columns   and rows, option to input annotation palette for tree and column annotations and multiple    parameters to modify aesthetics (style, color, font) of texts in the plot. 
