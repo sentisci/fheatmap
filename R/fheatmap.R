@@ -532,7 +532,6 @@ draw_names <- function(col_names=NULL,row_names=NULL,total_names=0,font_size=0.5
 draw_mat <- function(data,dim=NULL,breaks=NULL,mat_color=NULL,cell_border=NULL,cell_border_col=NULL,display_number=F){
   
   #Make space around the matrix
-  print(class(data))
   xmin <- rep(1:ncol(data),nrow(data))
   xmax <- xmin+1
   ymin <- rep(((nrow(data):1)),each=ncol(data))
