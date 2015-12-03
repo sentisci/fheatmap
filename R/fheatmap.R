@@ -576,7 +576,7 @@ draw_mat_legend <- function(data,breaks=NULL,mat_color,mat_legend_size=5,dim=NUL
   ymax = ymin + (ymin[2]-ymin[1])
   df_mat_legend <- data.frame(xmin,xmax,ymin,ymax)
   x_axis_breaks <- rep(1.3,length(pretty_range))
-  y_axis_breaks <- seq(5,max(ymax),length.out =length(pretty_range))
+  y_axis_breaks <- seq(5.5,max(ymax)-0.5,length.out =length(pretty_range))
   
   p<-ggplot(df_mat_legend, mapping=aes(xmin=xmin, xmax=xmax, ymin=ymin,ymax=ymax ))+
     geom_rect(fill=mat_color)+annotate(geom="text",x=x_axis_breaks,y=y_axis_breaks,label=pretty_range,size=mat_legend_size)+ 
