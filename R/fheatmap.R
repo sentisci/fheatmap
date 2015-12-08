@@ -16,7 +16,7 @@ ggplotColours <- function(n=6, h=c(0, 360) +15){
 
 ##Scale / Z transform
 Zscore <- function(x){
-  transformedx <- x-median(x)/(sd(x))
+  transformedx <- (x-median(x))/(sd(x))
   return(transformedx)
 }
 
@@ -569,8 +569,13 @@ draw_mat <- function(data,dim=NULL,breaks=NULL,mat_color=NULL,cell_border=NULL,c
 draw_mat_legend <- function(data,breaks=NULL,mat_color,mat_legend_size=5,dim=NULL){
   
   pretty_range<-grid.pretty(range(as.matrix(data), na.rm = TRUE))
+<<<<<<< HEAD
   pretty_range[1] <- min(as.matrix(data))
   xmin <- rep(0.1,length(mat_color))
+=======
+  ##pretty_range[1] <- min(as.matrix(data))
+  xmin <- rep(0.5,length(mat_color))
+>>>>>>> refs/remotes/origin/master
   xmax <- xmin+0.5
   ymin = seq(5,10,length.out =length(mat_color) )
   ymax = ymin + (ymin[2]-ymin[1])
