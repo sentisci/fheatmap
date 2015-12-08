@@ -570,7 +570,7 @@ draw_mat_legend <- function(data,breaks=NULL,mat_color,mat_legend_size=5,dim=NUL
   
   pretty_range<-grid.pretty(range(as.matrix(data), na.rm = TRUE))
   pretty_range[1] <- min(as.matrix(data))
-  xmin <- rep(0.5,length(mat_color))
+  xmin <- rep(0.1,length(mat_color))
   xmax <- xmin+0.5
   ymin = seq(5,10,length.out =length(mat_color) )
   ymax = ymin + (ymin[2]-ymin[1])
@@ -737,7 +737,7 @@ fheatmap <- function(data,header=T,scale=F,title=NA,title_fontsize=6,title_color
   #Set default Widths
   legend_row_width     = 0.01
   legend_col_width     = 0.01
-  mat_legend_width = padding_w*4 
+  mat_legend_width = padding_w*3 
   row_name_width   = max(unlist(length_npc(list_name=row_names, dim="width",font_size=row_fontsize))) +padding_w
   matrix_width     = (1-(legend_row_width+mat_legend_width+row_name_width))*0.98
   ann_row_width    = (1-(legend_row_width+mat_legend_width+row_name_width))*0.01
@@ -762,7 +762,7 @@ fheatmap <- function(data,header=T,scale=F,title=NA,title_fontsize=6,title_color
     
     for( i in 1:ncol(annotation_row)){ max_row_annot_str[i]<-as.character(annotation_row[,i][which.max(nchar(as.character(annotation_row[,i])))]) }
     ncols_rowannot   = ncol(annotation_row)
-    ann_row_width    = ncols_rowannot*(padding_w)
+    ann_row_width    = ncols_rowannot*(padding_w*1.5)
     legend_row_width= max(unlist(length_npc(list_name=max_row_annot_str,dim="width",font_size=legend_fontsize))) +padding_w*2.5  
   } 
   # Checking annotation_row colors
@@ -787,7 +787,7 @@ fheatmap <- function(data,header=T,scale=F,title=NA,title_fontsize=6,title_color
     
     for( i in 1:ncol(annotation_col)){ max_col_annot_str[i]<-as.character(annotation_col[,i][which.max(nchar(as.character(annotation_col[,i])))]) }
     ncols_colannot = ncol(annotation_col)
-    ann_col_height = ncols_colannot*(padding_h)
+    ann_col_height = ncols_colannot*(padding_h*1.5)
     legend_col_width= max(unlist(length_npc(list_name=max_col_annot_str,dim="width",font_size=legend_fontsize))) +padding_w*2.5
   }
   
@@ -851,13 +851,13 @@ fheatmap <- function(data,header=T,scale=F,title=NA,title_fontsize=6,title_color
                                                                 heights= unit.c(unit(c(title_height,tree_col_height,ann_col_height,matrix_height,col_name_height),"npc"))  )))
   
   
-#   ##Draw grid for reference
-#   for( i in 1:5)
-#   {for (j in 1:6){
-#     pushViewport(vplayout(i,j))
-#     grid.rect()
-#     upViewport()
-#   }}
+  ##Draw grid for reference
+  for( i in 1:5)
+  {for (j in 1:6){
+    pushViewport(vplayout(i,j))
+    grid.rect()
+    upViewport()
+  }}
   
   #make Grid Dimensions
   grid_dim_list<-grid_dim_function(display_rownames=display_rownames,display_colnames=display_colnames,annotation_row=annotation_row,
